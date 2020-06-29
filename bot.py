@@ -28,8 +28,14 @@ async def event_message(ctx):
         return
 
     #bot.py, in event_message, below the bot ignore stuffs
+    #listens for !dice command
+    await bot.handle_commands(ctx)
+    #says 'yo' to anyone who chats
     await ctx.channel.send('yo')
 
+@bot.command(name = 'dice')
+async def dice(ctx):
+    await ctx.send('Dem bones, dem bones!')
 
 
 
