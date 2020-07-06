@@ -1,6 +1,10 @@
 #This will be the bot script
 import os # for importing env vars for the bot to use
 from twitchio.ext import commands
+from dice import Die, D6 
+from threes_game import Hand, threes_low, check_int
+
+dice_players = {}
 
 bot = commands.Bot(
     # set up the bot
@@ -32,12 +36,26 @@ async def event_message(ctx):
     await bot.handle_commands(ctx)
     #says 'yo' to anyone who chats
     await ctx.channel.send('yo')
+    print(ctx.content)
 
 @bot.command(name = 'dice')
 async def dice(ctx):
-    await ctx.send('Dem bones, dem bones!')
+    if ctx.author.name.lower() in dice_players:
+        await ctx.channel.send('you in brah!')
+    else:
+        await ctx.send(f'Initiating dice game with {ctx.author.name.lower()}')
+    # adds user to list, hopefully to coordinate dice game with active players
+        player = ctx.author.name.lower()
+        print(player)
+        add_player = {}
+        dice_players.update(player = Hand())
+    # prints list of users for testing purposes
+    print(dice_players)
 
-
+    # testing to see dice values
+    h = Hand()
+    for dice in h:
+        print(dice.value)
 
 
 
