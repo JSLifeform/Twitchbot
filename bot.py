@@ -4,7 +4,10 @@ from twitchio.ext import commands
 from dice import Die, D6 
 from threes_game import Hand, threes_low, check_int
 
+# variable to store hand and corresponding players
 dice_players = {}
+
+
 
 bot = commands.Bot(
     # set up the bot
@@ -34,28 +37,59 @@ async def event_message(ctx):
     #bot.py, in event_message, below the bot ignore stuffs
     #listens for !dice command
     await bot.handle_commands(ctx)
-    #says 'yo' to anyone who chats
-    await ctx.channel.send('yo')
+    # prints chat text to console
     print(ctx.content)
 
 @bot.command(name = 'dice')
 async def dice(ctx):
     if ctx.author.name.lower() in dice_players:
-        await ctx.channel.send('you in brah!')
+        # pulls number off dice command for kept dice
+        response = ctx.content.split(' ', 2)
+        # checks that response is integer, warns chat if not an integer given
+        try:
+            response = int(response[1])
+        except ValueError:
+            await ctx.channel.send('''You did not appear to enter a valid amount of dice to be kept> Make sure you
+            follow the "!Dice 2" format.''')
+        else:
+            if response + dice_players[ctx.author.name.lower()][5] > 5:
+                await ctx.channel.send(f'Too many dice kept, currently {dice_players[ctx.author.name.lower()][5]} out of 5 kept')
+                return
+            dice_players[ctx.author.name.lower()][5] += response
+            print(dice_players[ctx.author.name.lower()][5])
+            print(dice_players[ctx.author.name.lower()])
+            #for dice in dice_players[ctx.author.name.lower()] in range (0, int(dice_players[ctx.author.name.lower()][5])):
+             #   dice.locked = True
+        # await ctx.channel.send(response[1])
     else:
+        #initiates dice game, creates hand
         await ctx.send(f'Initiating dice game with {ctx.author.name.lower()}')
+        h = Hand()
     # adds user to list, hopefully to coordinate dice game with active players
         player = ctx.author.name.lower()
         print(player)
-        add_player = {}
-        dice_players.update(player = Hand())
-    # prints list of users for testing purposes
-    print(dice_players)
+        roll = Hand()
+        # list to make new dice hands
+        hand = []
+        for dice in roll:
+            hand.append(dice)
+        print(hand)
+        dice_players[player] = hand + [0, 0]
+        await ctx.send(f'{player}s dice are:')
+        show_hand = ''
+        for dice in hand:
+            if dice.locked == True:
+                show_hand += (str(dice.value) + ' KEPT ')
+            else:        
+                show_hand += (str(dice.value) + '   ')
+        await ctx.send(show_hand)
 
-    # testing to see dice values
-    h = Hand()
-    for dice in h:
-        print(dice.value)
+
+    output = f'{ctx.author.name.lower()}' + ''',  how many dice would you like to keep this round? Enter the
+    number of dice you want to keep after the !dice command: i.e. enter "!dice 2" if you want to keep 2 dice
+    You must keep at least 1 die each round'''
+    await ctx.send(output)
+
 
 
 
