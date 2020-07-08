@@ -93,53 +93,57 @@ def lock_dice():
     # return score <--- deprecated, delete?
 
 # create hand and re/set kept dice to 0
-h = Hand()
-kept_dice = 0
+def main():
+    h = Hand()
+    kept_dice = 0
 
-#Begin game loop of keeping dice and re-rolling hand
-while kept_dice < 5:
-    
-
-    #asks user how many dice to keep, checks for a valid number
-    # BELOW BROKEN FUNCTION CALL< PROBABLY DELETE
-    #collect_and_verify_kept()
-    while True:
+    #Begin game loop of keeping dice and re-rolling hand
+    while kept_dice < 5:
         
-        # function to print dice
-        print_dice()
 
-        # checks that answer is integer
-        answer = check_int()
-        
-        # checks that number of dice kept is 1 to total unkept dice
-        if answer >= 1 and answer + kept_dice <= len(h):
-            kept_dice += answer
-            break
-        elif kept_dice + answer > len(h):
-            print(f"Too many dice! Only {len(h)} dice total!") 
-            continue
-        elif answer <= 1:
-            print("Must keep at least 1 die per round.")
-            continue
+        #asks user how many dice to keep, checks for a valid number
+        # BELOW BROKEN FUNCTION CALL< PROBABLY DELETE
+        #collect_and_verify_kept()
+        while True:
+            
+            # function to print dice
+            print_dice()
 
-    # initialize score to be tallied in loop below
-    score = 0
-    # lock all dice user has decided to keep
-    for _ in range(0, kept_dice):
-        h[_].locked = True
-        score = score + h[_].score
-    #checks to see if game is over, prints current score if not
-    if kept_dice < 5:   
-        print(f"Your score is currently {score}")
+            # checks that answer is integer
+            answer = check_int()
+            
+            # checks that number of dice kept is 1 to total unkept dice
+            if answer >= 1 and answer + kept_dice <= len(h):
+                kept_dice += answer
+                break
+            elif kept_dice + answer > len(h):
+                print(f"Too many dice! Only {len(h)} dice total!") 
+                continue
+            elif answer <= 1:
+                print("Must keep at least 1 die per round.")
+                continue
 
-    # removes all unkept dice
-    del h[kept_dice: ]
+        # initialize score to be tallied in loop below
+        score = 0
+        # lock all dice user has decided to keep
+        for _ in range(0, kept_dice):
+            h[_].locked = True
+            score = score + h[_].score
+        #checks to see if game is over, prints current score if not
+        if kept_dice < 5:   
+            print(f"Your score is currently {score}")
 
-    # add new dice to hand in place of unlocked dice
-    for _ in range(kept_dice, h.size):
-        h.append(h.die_type())
+        # removes all unkept dice
+        del h[kept_dice: ]
 
-    # re-sort list
-    h.sort(key = threes_low)
+        # add new dice to hand in place of unlocked dice
+        for _ in range(kept_dice, h.size):
+            h.append(h.die_type())
 
-print(f"GAME OVER, man! Your final score is {score}")
+        # re-sort list
+        h.sort(key = threes_low)
+
+    print(f"GAME OVER, man! Your final score is {score}")
+
+    if __name__ == '__main__':
+        main()
