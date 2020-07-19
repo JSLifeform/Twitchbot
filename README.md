@@ -1,3 +1,5 @@
+#MTGNerdBot
+
 Thank you for using my MTGNerdbot! The original plan was to create a bot that streamers playing Magic: The Gathering would using, but so far I have been unable to get a streamer to give me a realistic request for a chat bot feature I can code. So, instead I made one that lets you play a dice game in Twitch chat! The game is called "Threes," or "Threes Low." It is a dice game which I will describe in detail below.
 
 
@@ -6,7 +8,7 @@ Acknowledgments: Thanks to all the Code Louisville team over the past 2 years fo
 
 
 
-CODE LOUISVILLE PROJECT REQUIREMENTS
+##CODE LOUISVILLE PROJECT REQUIREMENTS
 
 Requirements met for the May 2020 Code Louisville Python project are as follows:
 
@@ -19,12 +21,12 @@ Requirements met for the May 2020 Code Louisville Python project are as follows:
 
 
 
-HOW TO RUN
+##HOW TO RUN
 
 This project was created with pipenv. The pipfile and pipfile.lock files are included in the repo. The dependencies can be installed through the command "pip install" within the project folder. The user must also create a .env file (simply named ".env", where the env is the file extension - no actual file name is wanted) where they include the name of their channel, bot, client ID and oauth token to access the Twitch API (NOTE: Code Louisville mentor -  contact me on slack "John Locken" and I can DM you my .env file. You can simply copy/paste the text from my .env file into yours). Once you've done this, you should be able to run the program with "pipenv run python bot.py". After that, the bot should be online at https://www.twitch.tv/mtgnerdbot. You can interact with it within the Twitch chat at that page. NOTE: A Twitch username must be created in order to use Twitch chat.
 
 
-HOW TO RUN, ABRIDGED
+###HOW TO RUN, ABRIDGED
 
     * download project to local machine
     * navigate to project folder in command prompt
@@ -38,12 +40,12 @@ HOW TO RUN, ABRIDGED
 
 
 
-THE BOT
+##THE BOT
 
 The chat bot currently has one main function: to allow user to play the Three's dice game in chat
 
 
-Bot Limitations
+###Bot Limitations
 
 The glaring limitation with the bot currently is that all game actions must be used through the main Twitch chat using the "!dice" command. The key issue with this is that if a player wants to perform the same game action (such as "!dice 1") they must wait 30 seconds between actions. This is due to a Twitch chat feature that will not allow a person to post the same chat message twice in a 30 second period. Hopefully this will be fixed by using the whisper feature in future versions, but the Twitchio library used in this bot does not currently work using the Twitch whisper feature.
 
@@ -51,17 +53,24 @@ The glaring limitation with the bot currently is that all game actions must be u
 
 
 
-THREE'S
+##THREE'S
 
 Three's, or "Three's Low," is a dice game typically played with 5 six-sided dice. The player rolls all 5 dice at the start of the game. Once the dice have been rolled, the player chooses one or more dice to "keep." These dice will not be rerolled and will be added to the final score. Once the player has picked a number of dice to keep, they will reroll the remaining dice. The player must then choose to keep one or more of the rerolled dice, adding it to the final score. This process is continued until all dice are kept.
 
-Scoring
+###Scoring
 
 A player's final score is equal to the sum of the face value of all kept dice with one exception: any dice showing a 3 on it's face is scored as 0. For example, a final kept hand of 3 3 1 4 5 will be scored as a 10.
 
 
 
 
-HOW TO PLAY
+###HOW TO PLAY
 
 Initiate a game by typing "!dice" into the Twitch chat where the bot is initialized. This will intialize a game and roll a starting hand for the player. After the results are displayed, type "!dice *" into chat, where * is the number of dice you want to keep(EXAMPLE: "!dice 2" will keep 2 dice). The game automates to keep the lowest scoring dice, so no need to pick individual dice to keep!. Once you have kept your dice, the bot will reroll the rest and show you your hand, with "-KEPT" succeeding all the dice you've already locked in. Repeat this process until all dice are kept, then the bot will display a final score! You will be automatically removed from the game database so you may restart another game by typing "!dice" again. You may also type "!giveup" into the chat at any time to cancel the current game.
+
+
+
+
+##Conclusion
+
+Thank you for taking the time to look at my project, any feedback is appreciated! A lot more time than I'm willing to admit has gone into the paltry coding skills I've earned so far, and I'm always looking for criticism to help me improve... or accolades to inflate my ego :smiling_face_with_three_hearts: Thank you again for your interest in my project, and until our pathes cross again, cheers! :beers: :beers: :beers:
