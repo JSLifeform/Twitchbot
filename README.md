@@ -73,7 +73,7 @@ Initiate a game by typing "!dice" into the Twitch chat where the bot is initiali
 * type "!dice" in chat to start game
 * type "!dice (num_dice)" to choose how many dice to keep this round (e.g "!dice 2" for 2 dice)
 * game will automatically terminate after all dice are kept, score will be displayed
-* type "!giveup" at any time to stop the game and purger the player from the queue
+* type "!giveup" at any time to stop the game and purge the player from the queue
 
 
 
