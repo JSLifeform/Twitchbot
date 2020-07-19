@@ -73,4 +73,4 @@ Initiate a game by typing "!dice" into the Twitch chat where the bot is initiali
 
 ## Conclusion
 
-Thank you for taking the time to look at my project, any feedback is appreciated! A lot more time than I'm willing to admit has gone into the paltry coding skills I've earned so far, and I'm always looking for criticism to help me improve... or accolades to inflate my ego :smiling_face_with_three_hearts: Thank you again for your interest in my project, and until our pathes cross again, cheers! :beers: :beers: :beers:
+Thank you for taking the time to look at my project, any feedback is appreciated! A lot more time than I'm willing to admit has gone into the paltry coding skills I've earned so far, and I'm always looking for criticism to help me improve... or accolades to inflate my ego :smiling_face_with_three_hearts: Thank you again for your interest in my project, and until our paths cross again, cheers! :beers: :beers: :beers:
