@@ -66,8 +66,14 @@ A player's final score is equal to the sum of the face value of all kept dice wi
 
 ### HOW TO PLAY
 
-Initiate a game by typing "!dice" into the Twitch chat where the bot is initialized. This will intialize a game and roll a starting hand for the player. After the results are displayed, type "!dice *" into chat, where * is the number of dice you want to keep (EXAMPLE: "!dice 2" will keep 2 dice). The game automates to keep the lowest scoring dice, so no need to pick which individual dice to keep! Once you have kept your dice, the bot will reroll the rest and show you your hand, with "-KEPT" succeeding all the dice you've already locked in. Repeat this process until all dice are kept, then the bot will display a final score! You will be automatically removed from the game database so you may restart another game by typing "!dice" again. You may also type "!giveup" into the chat at any time to cancel the current game.
+Initiate a game by typing "!dice" into the Twitch chat where the bot is initialized. This will intialize a game and roll a starting hand for the player. After the results are displayed, type "!dice *" into chat, where * is the number of dice you want to keep (EXAMPLE: "!dice 2" will keep 2 dice). The game automates to keep the lowest scoring dice, so no need to pick which individual dice to keep! Once you have kept your dice, the bot will reroll the rest and show you your hand, with "-KEPT" proceeding all the dice you've already locked in. Repeat this process until all dice are kept, then the bot will display a final score! You will be automatically removed from the game database so you may restart another game by typing "!dice" again. You may also type "!giveup" into the chat at any time to cancel the current game.
 
+#### HOW TO PLAY, ABRIDGED
+
+* type "!dice" in chat to start game
+* type "!dice *" (* = number of dice you want to keep) to choose how many dice to keep (e.g "!dice 2" for 2 dice)
+* game will automatically terminate after all dice are kept, score will be displayed
+* type "!giveup" at any time to stop the game and purger the player from the queue
 
 
 
