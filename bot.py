@@ -1,20 +1,22 @@
 #This will be the bot script
+
 import os # for importing env vars for the bot to use
-from twitchio.ext import commands
-from dice import Die, D6 
-from threes_game import Hand, threes_low, check_int
+from twitchio.ext import commands # library which allows @bot.event and command classes/functions
+from dice import Die, D6 #imports dice objects
+from threes_game import Hand, threes_low, check_int #imports a couple functions I was too lazy to retype
 
 # variable to store hand and corresponding players
 dice_players = {}
 
 def print_hand(ctx, hand):
+    'Creates string showing values of dice and whic are kept'
     player = ctx.author.name.lower()
-    show_hand = (f'{player}s dice are:            ')
+    show_hand = (f"{player}'s dice are:  ")
     for dice in hand:
         if dice.locked == True:
             show_hand += (str(dice.value) + '-KEPT    ')
         else:        
-            show_hand += (str(dice.value) + '      ')
+            show_hand += (str(dice.value) + '  ')
     return show_hand
 
 
@@ -44,42 +46,52 @@ async def event_message(ctx):
     if ctx.author.name.lower() == os.environ['BOT_NICK'].lower():
         return
 
-    #bot.py, in event_message, below the bot ignore stuffs
-    #listens for !dice command
+    #listens for Twitch commands
     await bot.handle_commands(ctx)
     # prints chat text to console
     print(ctx.content)
 
+@bot.command(name = 'giveup')
+async def give_up(ctx):
+    'Clears player from game queue and sends an encouraging video'
+    try:
+        del dice_players[ctx.author.name.lower()]
+    except KeyError:
+        await ctx.send(f"{ctx.author.name.lower()}, you don't appear to be in the game yet!")
+    else:
+        await ctx.send('Giving up alread? Remember folks, be like Rick! https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+
 @bot.command(name = 'dice')
 async def dice(ctx):
-    # allows for shorter typing of this obnoxious string for name calls
+    'command used to interact with dice game'
+    # allows for shorter typing of this obnoxious string for player name calls
     name = ctx.author.name.lower()
+
     if name in dice_players:
         # pulls number off dice command for kept dice
         response = ctx.content.split(' ', 2)
+        
         # checks that response is integer, warns chat if not an integer given
         try:
             response = int(response[1])
         except ValueError:
             await ctx.channel.send('''You did not appear to enter a valid amount of dice to be kept...
-             Make sure you follow the "!Dice 2" format.''')
+             Make sure you follow the "!Dice *" format.''')
         else:
             if response + dice_players[name][5] > 5:
                 await ctx.channel.send(f'Too many dice to keep, currently {dice_players[name][5]} out of 5 kept')
                 return
+            # adds to total of kept dice for player
             dice_players[name][5] += response
-            print(dice_players[name][5])
-            print(dice_players[name])
-            # for dice in dice_players[ctx.author.name.lower()] in range (0, int(dice_players[ctx.author.name.lower()][5])):
+
+
             # locks dice that are kept each round
             for i in range(dice_players[name][5]):
+                #locks kept dice and prints score of kept dice in command prompt
                 dice_players[name][i].locked = True
-                print(f'Die #{i} locked with score of {dice_players[name][i].score}')
-            # for dice in dice_players[ctx.author.name.lower()] in range(5): <--- deprecated delete?
-            #     if dice.locked == True:   <--- deprecated delete?
-            #         print("locked!")    <--- deprecated delete?
+                print(f'Die #{i + 1} locked with score of {dice_players[name][i].score}')
 
-            #refreshes dice if less than 5 kept
+            #refreshes unkept dice if less than 5 kept
             if dice_players[name][5] < 5:
                 score = dice_players[name].pop()
                 keepers = dice_players[name].pop()
@@ -96,58 +108,47 @@ async def dice(ctx):
                 #appends keepers and score to player dictionary
                 dice_players[name].append(keepers)
                 dice_players[name].append(score)
-                print(dice_players[name])
+                output = f'{ctx.author.name.lower()}' + ''',  how many dice would you like to keep this round? 
+    Enter the number of dice you want to keep after the !dice command: i.e. enter "!dice 2" if you 
+    want to keep 2 dice, You must keep at least 1 die each round'''
+                await ctx.send(output)
+
+            # initiates game end sequence if all dice are kept
             else:
                 score = dice_players[name].pop()
                 keepers = dice_players[name].pop()
                 for dice in dice_players[name]:
                     score += dice.score
-                print(score)
-                await ctx.send(f'''Congratulations {name}, your game has ended! You scored {score} points!
-                 If it's not a Goose Egg then you're nothing!''')
-                # cleans up variables, are score and keepers unnecessary since they only exist in a loop?
-                del dice_players[name], score, keepers
-   
-            #this has to be the Python-y way to do it, above is clunky
-            #for dice in dice_players[ctx.author.name.lower()]:
-                #print(dice)
                 
-                #for dice in range(0, int(ctx.author.name.lower()[5])):
-                   # dice.locked = True
-                   # print(dice.locked)
-        # await ctx.channel.send(response[1])
+                # adds kept dice to string to display to user in game over message
+                final_hand = ''
+                for die in dice_players[name]:
+                    final_hand += (str(die.value) + ' ')
+
+                #shows game ending message and stats    
+                await ctx.send(f'''Congratulations {name}, your game has ended! You scored {score} points!
+                 Your final hand was: {final_hand}''')
+
+                # cleans up variables, are score and keepers unnecessary since they only exist in a loop?
+                del dice_players[name], score, keepers, final_hand
+           
+    #if player not in dictionary, initiates dice game, creates hand
     else:
-        #initiates dice game, creates hand
         await ctx.send(f'Initiating dice game with {ctx.author.name.lower()}')
         h = Hand()
-    # adds user to list, hopefully to coordinate dice game with active players
+    # adds user to listof active players
         player = ctx.author.name.lower()
         print(player)
         roll = Hand()
+
         # list to make new dice hands
         hand = []
+        #adds dice to hand
         for dice in roll:
             hand.append(dice)
-        print(hand)
+        #adds 0's to player dictionary, indicating starting score of 0 and 0 kept dice respectively
         dice_players[player] = hand + [0, 0]
         await ctx.send(print_hand(ctx, hand))
-
-        # below 6 now in print_hand(), deprecated, delete?
-        # for dice in hand:
-        #     if dice.locked == True:
-        #         show_hand += (str(dice.value) + ' KEPT ')
-        #     else:        
-        #         show_hand += (str(dice.value) + '   ')
-        # await ctx.send(show_hand)
-
-
-    output = f'{ctx.author.name.lower()}' + ''',  how many dice would you like to keep this round? 
-    Enter the number of dice you want to keep after the !dice command: i.e. enter "!dice 2" if you 
-    want to keep 2 dice, You must keep at least 1 die each round'''
-    await ctx.send(output)
-
-    print(dice_players)
-
 
 
 if __name__ == "__main__":
