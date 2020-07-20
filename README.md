@@ -80,7 +80,7 @@ A player's final score is equal to the sum of the face value of all kept dice wi
 
 ## QUITTING THE BOT
 
-As of right now, the only way to quit the bot is to use the hotkey quit (ctrl + c in Windows) or to close the cmd window it is running in. This may be changed in future versions but I'm not sure of a good way to do that without adding a Twitch command, which has to omuch potential for abuse.
+As of right now, the only way to quit the bot is to use the hotkey quit (ctrl + c in Windows) or to close the cmd window it is running in. This may be changed in future versions but I'm not sure of a good way to do that without adding a Twitch command, which has too much potential for abuse.
 
 
 
