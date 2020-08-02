@@ -12,9 +12,10 @@ Acknowledgments: Thanks to all the Code Louisville team over the past 2 years fo
 
 Requirements met for the May 2020 Code Louisville Python project are as follows:
 
-*  Implement a “master loop” console application where the user can repeatedly enter commands/perform actions, including choosing to exit the program
+*  Create a class, then create at least one object of that class and populate it with data. I created a die class and a D6 class, which is a subclass of die, in dice.py. These objects are used to populate the dice hand for the game.
 *  Create a dictionary or list, populate it with several values, retrieve at least one value, and use it in your program
 *  Connect to an external/3rd party API and read data into your app
+* Create and call at least 3 functions, at least one of which must return a value that is used
 *  Build a conversion tool that converts user input to another type and displays it (ex: converts cups to grams) (I think? I convert the string input from the API into an integer to use in my program)
 *  Potentially others I forgot about! I'm quite confident I hit the minimum requirements already and am too lazy to try to pick out other requirements I randomly satisfied in my endeavor
 
